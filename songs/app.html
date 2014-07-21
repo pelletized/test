@@ -1,0 +1,78 @@
+<!doctype html>
+<html ng-app="songApp">
+<head>
+
+<title>test for angular</title>
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+<script>
+'use strict';
+
+
+/**
+* Filters out all duplicate items from an array by checking the specified key
+* @param [key] {string} the name of the attribute of each object to compare for uniqueness
+if the key is empty, the entire object will be compared
+if the key === false then no filtering will be performed
+* @return {array}
+*/
+angular.module('ui.unique',[]).filter('unique', ['$parse', function ($parse) {
+
+  return function (items, filterOn) {
+
+    if (filterOn === false) {
+      return items;
+    }
+
+    if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
+      var newItems = [],
+        get = angular.isString(filterOn) ? $parse(filterOn) : function (item) { return item; };
+
+      var extractValueToCompare = function (item) {
+        return angular.isObject(item) ? get(item) : item;
+      };
+
+      angular.forEach(items, function (item) {
+        var isDuplicate = false;
+
+        for (var i = 0; i < newItems.length; i++) {
+          if (angular.equals(extractValueToCompare(newItems[i]), extractValueToCompare(item))) {
+            isDuplicate = true;
+            break;
+          }
+        }
+        if (!isDuplicate) {
+          newItems.push(item);
+        }
+
+      });
+      items = newItems;
+    }
+    return items;
+  };
+}]);
+
+var songApp = angular.module('songApp',['ui.unique']);
+function songController($scope, $http) {
+  $http.get("js/data.json").success(function(response) {
+    $scope.songs = response.songs;			
+  });  
+}
+</script>
+
+</head>
+<body>
+	<div ng-controller="songController">
+	
+		<select name="year" id="year" ng-model="selectYear">
+			<option></option>
+			<option ng-repeat="song in songs | unique:'song.year'" value="{{song.year}}">{{song.year}}</option>
+		
+		</select>
+	
+		<ul id="songtitles" ng-repeat="song in songs | filter:selectYear">
+			<li><a href="//www.youtube.com/watch?v={{song.video}}" target="_blank">{{song.title}} - {{song.artist}}</a> - {{song.year}}</li>
+		</ul>	
+	</div>
+</body>
+</html>
