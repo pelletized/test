@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app="rssApp">
+<head>
+
+<title>rss reader</title>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-resource.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-sanitize.min.js"></script>
+</head>
+<body ng-controller='FeedCtrl'>
+ 
+<div ng-repeat="feed in feeds">
+    <h2><a href="{{feed.link}}" target="_blank">{{feed.title}}</a></h2>
+	<p>{{feed.description}}</p>
+    <div ng-repeat="item in feed.entries">
+
+		
+        <!--<a href="{{item.link}}" target="_blank">{{item.title}}</a> -->
+        <a href="#" ng-click="show = !show">{{item.title}}</a> 
+		(<span>{{item.publishedDate | date:'MMM-dd-yyyy'}}</span>)
+		
+		<div ng-show="show">
+			<p>{{item.contentSnippet}}</p>
+			<p><a href="{{item.link}}">See full article</a></p>
+		</div>
+		
+		<!--<div ng-bind-html="item.content"></div>-->
+		
+		
+		
+
+			
+		
+		
+    </div>
+</div>
+
+<script src="js/feed.js"></script>
+</body>
+</html>
