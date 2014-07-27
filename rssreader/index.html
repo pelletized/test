@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="rssApp">
+<head>
+
+<title>JW News</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-resource.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-sanitize.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body ng-controller='FeedCtrl'>
+ 
+<div id="main" ng-repeat="feed in feeds">
+    <!--<h2><a href="{{feed.link}}" target="_blank">{{feed.title}}</a></h2>
+	<p>{{feed.description}}</p>-->
+    <a href="{{item.link}}" class="item" ng-repeat="item in feed.entries">        
+        <p><span class="title">{{item.title}}</span><br>
+		{{item.contentSnippet}}</p>
+		(<span class="date">{{item.publishedDate | date:'MMM-dd-yyyy'}}</span>)		
+		
+    </a>
+</div>
+
+<script src="js/feed.js"></script>
+</body>
+</html>

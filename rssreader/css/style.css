@@ -1,0 +1,63 @@
+* {
+box-sizing:border-box;
+font:normal 1rem/1.5rem arial, helvetica, sans-serif;
+}
+
+body {
+background-color:#272b30;
+margin:0;
+padding:0;
+}
+
+.item {
+position:relative;
+display:block;
+padding:0 17% 3% 5%;
+border-bottom:1px solid grey;
+}
+
+.item:after {
+position:absolute;
+top: 0; 
+bottom: 0; 
+right: 5%;
+margin:auto;
+content:"\00BB";
+height:50px;
+overflow:auto;
+font-size:50px;
+display:block;
+}
+
+.item:last-child {
+border-bottom:0;
+}
+
+a.item {
+color:#c8c8c8;
+outline:none;
+text-decoration:none;
+}
+
+a.item:hover {
+text-decoration:none;
+}
+
+a:active.item{
+background-color:white;
+color:#272b30;
+text-decoration:none;
+}
+
+a.item:active span {
+color:#272b30;
+}
+
+.title {
+font-weight:bold;
+color:white;
+}
+
+.date {
+font-size:80%;
+}

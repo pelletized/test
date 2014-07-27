@@ -58,26 +58,12 @@ angular.module('rssApp', ['ngResource', 'ngSanitize', 'ui.unique'])
 			//var feedSources = [feedSources1, feedSources2];
 			var feedSources = [{title: 'news', url: 'http://pipes.yahoo.com/pipes/pipe.run?_id=91847d734871ff638c652253a7924079&_render=rss'}];
 			
-			//angular.extend(myDest, feedSources1,feedSources2);
-			//console.log(myDest);
 			
-			/*
-			var feedSources = [
-				{title: 'articles', url: 'http://www.jw.org/en/whats-new/rss/WhatsNewWebArticles/feed.xml'},				
-				{title: 'news', url: 'http://www.jw.org/en/news/rss/LatestNewsList/feed.xml'}				
-			];
-			*/
 			if (feeds.length === 0) {
 				for (var i=0; i<feedSources.length; i++) {
 					FeedLoader.fetch({q: feedSources[i].url, num: 20}, {}, function (data) {
 						var feed = data.responseData.feed;
-						feeds.push(feed);	
-						/* create dupes error
-						angular.forEach(feed, function(value, key) {
-						   feeds.push(key + ': ' + value);
-						 });
-						 */
-						
+						feeds.push(feed);							
 					});
 				}
 			}
@@ -92,12 +78,7 @@ angular.module('rssApp', ['ngResource', 'ngSanitize', 'ui.unique'])
 			$scope.feeds = data;			
 		});
 		
-		console.log($scope.feeds);
-		
-		$scope.getDetails = function () {
-			alert('click');
-		
-		}					
+		//console.log($scope.feeds);					
 		
 	});
 	
