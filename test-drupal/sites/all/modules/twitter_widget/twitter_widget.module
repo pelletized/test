@@ -69,8 +69,7 @@ function twitter_widget_block_save($delta = '', $edit = array()) {
   if ($delta == 'twitter_widget') {
     variable_set('twitter_widget_block_count', $edit['twitter_widget_block_count']);
     variable_set('twitter_widget_block_profile', $edit['twitter_widget_block_profile']);
-    //variable_set('twitter_widget_block_width', $edit['twitter_widget_block_width']);
-    //variable_set('twitter_widget_block_height', $edit['twitter_widget_block_height']);
+    variable_set('twitter_widget_block_id', $edit['twitter_widget_block_id']);    
     variable_set('twitter_widget_block_options', $edit['twitter_widget_block_options']);
   }
 }
@@ -87,18 +86,15 @@ function twitter_widget_block_view($delta = '') {
       $block['subject'] = t('Twitter');
 
 	//Assign Configuration to Variables
-      $profile = variable_get('twitter_widget_block_profile', 'b4ucode');
-      //$width = variable_get('twitter_widget_block_width', 300);
-      //$height = variable_get('twitter_widget_block_height', 250);
-	  
-      $count = variable_get('twitter_widget_block_count', 4);
-	  //$chrome_options_array = array('noheader', 'nofooter', 'noscrollbar', 'noborders');
+      $profile = variable_get('twitter_widget_block_profile', 'frightening');
+      $twitter_id = variable_get('twitter_widget_block_id', '494191244180869122');	        
+      $count = variable_get('twitter_widget_block_count', 4);	  
 	  $chrome_options_array = variable_get('twitter_widget_block_options');
 	  $chrome_options = implode($chrome_options_array, ' ');	  
 	  
 	$html='';
 	$html.='<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>';
-	$html.='<a class="twitter-timeline"  href="https://twitter.com/frightening"  data-widget-id="494191244180869122" data-tweet-limit="' . $count . '" data-chrome="' . $chrome_options . '">Tweets by @frightening</a>
+	$html.='<a class="twitter-timeline"  href="https://twitter.com/frightening"  data-widget-id="' . $twitter_id . '" data-tweet-limit="' . $count . '" data-chrome="' . $chrome_options . '">Tweets by @' . $profile . '</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
       $block['content'] = $html;
 }
