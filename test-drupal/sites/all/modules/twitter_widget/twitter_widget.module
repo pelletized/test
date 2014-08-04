@@ -1,0 +1,106 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function twitter_widget_block_info() {
+
+$blocks['twitter_widget'] = array(
+      'info' => t('Twitter Widget'),
+    );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_configure().
+ *
+ *
+ */
+function twitter_widget_block_configure($delta = '') {
+  $form = array();
+  if ($delta == 'twitter_widget') {
+$form['twitter_widget'] = array(
+  '#type' => 'fieldset',
+  '#title' => t('Twitter Widget Options'),
+);
+    $form['twitter_widget']['twitter_widget_block_profile'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Profile'),
+      '#default_value' => variable_get('twitter_widget_block_profile', 'frightening'),
+    );
+	
+	$form['twitter_widget']['twitter_widget_block_id'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Widget ID #'),
+      '#default_value' => variable_get('twitter_widget_block_id', '494191244180869122'),
+    );
+	
+    $form['twitter_widget']['twitter_widget_block_count'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Tweets to Display'),
+      '#default_value' => variable_get('twitter_widget_block_count', 3),
+    );
+
+	$options = array('header', 'footer', 'scrollbars', 'borders');	
+	$form['twitter_widget']['twitter_widget_block_options'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Display options'),
+      '#description' => t('check off the items you want to hide'),
+      '#default_value' => variable_get('twitter_widget_block_options', array()),
+	  '#options' => array(
+		'noheader' => 'Header', 
+		'nofooter' => 'Footer', 
+		'noscrollbars' => 'Scrollbars', 
+		'noborders' => 'Borders',
+		),
+    );
+
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_block_save().
+ *
+ *
+ */
+function twitter_widget_block_save($delta = '', $edit = array()) {
+  if ($delta == 'twitter_widget') {
+    variable_set('twitter_widget_block_count', $edit['twitter_widget_block_count']);
+    variable_set('twitter_widget_block_profile', $edit['twitter_widget_block_profile']);
+    //variable_set('twitter_widget_block_width', $edit['twitter_widget_block_width']);
+    //variable_set('twitter_widget_block_height', $edit['twitter_widget_block_height']);
+    variable_set('twitter_widget_block_options', $edit['twitter_widget_block_options']);
+  }
+}
+
+/**
+ * Implements hook_block_view().
+ *
+ * Prepares the contents of the block.
+ */
+function twitter_widget_block_view($delta = '') {
+ $block = array();
+  switch($delta) {
+    case 'twitter_widget' :
+      $block['subject'] = t('Twitter');
+
+	//Assign Configuration to Variables
+      $profile = variable_get('twitter_widget_block_profile', 'b4ucode');
+      //$width = variable_get('twitter_widget_block_width', 300);
+      //$height = variable_get('twitter_widget_block_height', 250);
+	  
+      $count = variable_get('twitter_widget_block_count', 4);
+	  //$chrome_options_array = array('noheader', 'nofooter', 'noscrollbar', 'noborders');
+	  $chrome_options_array = variable_get('twitter_widget_block_options');
+	  $chrome_options = implode($chrome_options_array, ' ');	  
+	  
+	$html='';
+	$html.='<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>';
+	$html.='<a class="twitter-timeline"  href="https://twitter.com/frightening"  data-widget-id="494191244180869122" data-tweet-limit="' . $count . '" data-chrome="' . $chrome_options . '">Tweets by @frightening</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
+      $block['content'] = $html;
+}
+    return $block;
+}

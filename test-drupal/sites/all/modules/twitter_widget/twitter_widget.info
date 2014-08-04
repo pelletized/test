@@ -1,0 +1,4 @@
+name = Twitter Widget
+description = Twitter Widget for Drupal
+core = 7.x
+files[] = twitter_widget.module
