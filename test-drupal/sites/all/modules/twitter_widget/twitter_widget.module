@@ -24,6 +24,7 @@ $form['twitter_widget'] = array(
   '#type' => 'fieldset',
   '#title' => t('Twitter Widget Options'),
 );
+
     $form['twitter_widget']['twitter_widget_block_profile'] = array(
       '#type' => 'textfield',
       '#title' => t('Profile'),
@@ -94,7 +95,7 @@ function twitter_widget_block_view($delta = '') {
 	  
 	$html='';
 	$html.='<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>';
-	$html.='<a class="twitter-timeline"  href="https://twitter.com/frightening"  data-widget-id="' . $twitter_id . '" data-tweet-limit="' . $count . '" data-chrome="' . $chrome_options . '">Tweets by @' . $profile . '</a>
+	$html.='<a class="twitter-timeline"  href="https://twitter.com/' . $profile . '"  data-widget-id="' . $twitter_id . '" data-tweet-limit="' . $count . '" data-chrome="' . $chrome_options . '">Tweets by @' . $profile . '</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>';
       $block['content'] = $html;
 }
